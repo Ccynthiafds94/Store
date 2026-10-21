@@ -1,14 +1,13 @@
-__cnx = None
+import os
 
 import mysql.connector
+
+
 def get_sql_connection():
-    global __cnx
-    if __cnx is None:
-        config = {
-                "user": "root",
-                "password": "root",
-                "host": "127.0.0.1",
-                "database": "gs",
-        }
-        __cnx = mysql.connector.connect(**config)
-    return __cnx
+    config = {
+        "user": os.environ.get("MYSQL_USER", "root"),
+        "password": os.environ.get("MYSQL_PASSWORD", "root"),
+        "host": os.environ.get("MYSQL_HOST", "127.0.0.1"),
+        "database": os.environ.get("MYSQL_DATABASE", "gs"),
+    }
+    return mysql.connector.connect(**config)
